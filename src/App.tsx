@@ -7,7 +7,6 @@ import {
   ExternalLink,
   Code,
   Mail,
-  Rocket,
   ChevronDown,
   Layout,
   Database,
@@ -298,10 +297,11 @@ export default function App() {
       // Magnetic effect for all buttons
       const magneticBtns = containerRef.current?.querySelectorAll('.magnetic-btn');
       magneticBtns?.forEach((btn) => {
-        const moveBtn = (e: any) => {
+        const moveBtn = (e: Event) => {
+          const mouseEvent = e as MouseEvent;
           const boundRect = (btn as HTMLElement).getBoundingClientRect();
-          const x = e.clientX - boundRect.left - boundRect.width / 2;
-          const y = e.clientY - boundRect.top - boundRect.height / 2;
+          const x = mouseEvent.clientX - boundRect.left - boundRect.width / 2;
+          const y = mouseEvent.clientY - boundRect.top - boundRect.height / 2;
           gsap.to(btn, { x: x * 0.45, y: y * 0.45, duration: 0.35 });
         };
         const resetBtn = () => {
@@ -368,10 +368,10 @@ export default function App() {
 
           {/* Hero Content Details */}
           <div className="hero-details max-w-4xl space-y-8 z-10">
-            <h1 className="text-5xl md:text-8xl font-black tracking-tight leading-none bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-200">
+            <h1 className="text-5xl md:text-8xl font-black tracking-tight leading-none mix-blend-difference bg-clip-text text-transparent bg-gradient-to-b from-white to-slate-200">
               {data.hero.headline}
             </h1>
-            <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed mix-blend-difference">
               {data.hero.subheadline}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
@@ -392,7 +392,7 @@ export default function App() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-32 px-6 max-w-6xl mx-auto reveal">
+      <section id="about" className="py-10 lg:py-32 px-6 max-w-6xl mx-auto reveal">
         <div className="grid md:grid-row gap-12 text-center md:text-left">
           <h2 className="text-4xl text-center md:text-6xl font-black mb-8 reveal-child type-text">{data.about.title}</h2>
           <div className="grid md:grid-cols-2 gap-12">
@@ -423,7 +423,7 @@ export default function App() {
         </div>
       </section>
 
-      <section id="skills" className="py-32 px-6 relative overflow-hidden">
+      <section id="skills" className="lg:py-32 py-10 px-6 relative overflow-hidden">
 
         <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] pointer-events-none -z-10 animate-float" />
         <div className="absolute bottom-[-10%] left-1/4 w-[500px] h-[500px] bg-primary-dark/20 rounded-full blur-[100px] pointer-events-none -z-10" />
@@ -458,7 +458,7 @@ export default function App() {
           </div>
         </div>
       </section>
-      <section id="experience" className="py-32 px-6 reveal max-w-6xl mx-auto">
+      <section id="experience" className="py-10 lg:py-32 px-6 reveal max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-6xl font-black mb-16 reveal-child type-text">Professional Journey</h2>
         <div className="space-y-12">
           {data.experience.map((exp, i) => (
@@ -503,7 +503,7 @@ export default function App() {
                 <div className="h-[300px] md:h-[400px] bg-slate-900 group-hover:scale-105 transition-transform duration-700 relative flex items-center justify-center">
                   {/* Automated Screenshot */}
                   <img
-                    src={(project as any).image}
+                    src={(project as { image: string }).image}
                     alt={project.name}
                     className="absolute inset-0 w-full h-full object-cover object-top opacity-50 group-hover:opacity-100 transition-opacity duration-700"
                     loading="lazy"
@@ -534,7 +534,7 @@ export default function App() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-32 px-6 text-center reveal">
+      <section className="py-10lg:py-32 px-6 text-center reveal">
         <div className="max-w-4xl mx-auto bg-gradient-to-br from-primary to-primary-dark rounded-[3rem] p-12 md:p-20 shadow-2xl shadow-primary/20">
           <h2 className="text-4xl md:text-6xl font-black mb-8 leading-tight type-text">{data.contact.title}</h2>
           <p className="text-lg md:text-xl text-white/80 mb-12">{data.contact.subtext}</p>
@@ -545,7 +545,7 @@ export default function App() {
       </section>
 
       {/* Footer */}
-      <footer id="contact" className="py-20 px-6 border-t border-white/5">
+      <footer id="contact" className="py-10 lg:py-20 px-6 border-t border-white/5">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
           <div className="text-center md:text-left space-y-4">
             <div className="flex justify-center md:justify-start">
@@ -561,7 +561,7 @@ export default function App() {
           <div className="text-center md:text-right space-y-4">
             <p className="text-sm uppercase tracking-widest text-slate-500">Contact</p>
             <div className="flex flex-col md:items-end space-y-3">
-              <a href={`mailto:${data.contact.email}`} className="flex items-center justify-center md:justify-end space-x-3 text-2xl font-bold hover:text-primary transition-colors group">
+              <a href={`mailto:${data.contact.email}`} className="flex items-center justify-center md:justify-end space-x-3 md:text-2xl text-lg font-bold hover:text-primary transition-colors group">
                 <Mail className="w-6 h-6 text-primary group-hover:scale-110 transition-transform flex-shrink-0" />
                 <span>{data.contact.email}</span>
               </a>
@@ -574,7 +574,7 @@ export default function App() {
             </div>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto pt-20 text-center text-slate-600 text-xs">
+        <div className="max-w-7xl mx-auto lg:pt-20 pt-10 text-center text-slate-600 text-xs">
           © {new Date().getFullYear()} Somasundar S. All rights reserved. Built with React & GSAP.
         </div>
       </footer>

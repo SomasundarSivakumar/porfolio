@@ -200,16 +200,16 @@ class ParticleCanvasInstance {
         ];
 
         if (this.customParticleCount) {
-            const totalDefault = layers.reduce((sum, l) => sum + (l as any).numParticles, 0);
+            const totalDefault = layers.reduce((sum, l) => sum + (l as { numParticles: number }).numParticles, 0);
             const scale = this.customParticleCount / totalDefault;
 
             layers.forEach(layer => {
-                (layer as any).numParticles = Math.round((layer as any).numParticles * scale);
+                (layer as { numParticles: number }).numParticles = Math.round((layer as { numParticles: number }).numParticles * scale);
             });
         }
 
         layers.forEach(layer => {
-            for (let i = 0; i < (layer as any).numParticles; i++) {
+            for (let i = 0; i < (layer as { numParticles: number }).numParticles; i++) {
                 this.particles.push(new Particle(layer as unknown as ParticleConfig, this));
             }
         });
